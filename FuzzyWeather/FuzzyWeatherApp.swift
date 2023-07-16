@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct FuzzyWeatherApp: App {
+    @State private var store = LocationModelStore.defaultStore
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: $store)
         }
     }
 }

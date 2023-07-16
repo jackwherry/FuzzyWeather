@@ -14,6 +14,12 @@
 		04BFF8252A5DA0CD002718CF /* FuzzyWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8242A5DA0CD002718CF /* FuzzyWeatherTests.swift */; };
 		04BFF82F2A5DA0CD002718CF /* FuzzyWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF82E2A5DA0CD002718CF /* FuzzyWeatherUITests.swift */; };
 		04BFF8312A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */; };
+		04BFF83F2A5F58D5002718CF /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF83E2A5F58D5002718CF /* LocationModel.swift */; };
+		04BFF8402A5F58D5002718CF /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF83E2A5F58D5002718CF /* LocationModel.swift */; };
+		04BFF8422A5F58FB002718CF /* LocationModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8412A5F58FB002718CF /* LocationModelStore.swift */; };
+		04BFF8432A5F58FB002718CF /* LocationModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8412A5F58FB002718CF /* LocationModelStore.swift */; };
+		04BFF8452A5F6C03002718CF /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8442A5F6C03002718CF /* LocationDetailView.swift */; };
+		04BFF8462A5F6C03002718CF /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8442A5F6C03002718CF /* LocationDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +50,9 @@
 		04BFF82A2A5DA0CD002718CF /* FuzzyWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuzzyWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		04BFF82E2A5DA0CD002718CF /* FuzzyWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyWeatherUITests.swift; sourceTree = "<group>"; };
 		04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyWeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		04BFF83E2A5F58D5002718CF /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
+		04BFF8412A5F58FB002718CF /* LocationModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModelStore.swift; sourceTree = "<group>"; };
+		04BFF8442A5F6C03002718CF /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +105,10 @@
 			children = (
 				04BFF8132A5DA0CC002718CF /* FuzzyWeatherApp.swift */,
 				04BFF8152A5DA0CC002718CF /* ContentView.swift */,
+				04BFF83D2A5F5877002718CF /* Model */,
 				04BFF8172A5DA0CC002718CF /* Assets.xcassets */,
 				04BFF8192A5DA0CC002718CF /* Preview Content */,
+				04BFF8442A5F6C03002718CF /* LocationDetailView.swift */,
 			);
 			path = FuzzyWeather;
 			sourceTree = "<group>";
@@ -125,6 +136,15 @@
 				04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */,
 			);
 			path = FuzzyWeatherUITests;
+			sourceTree = "<group>";
+		};
+		04BFF83D2A5F5877002718CF /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				04BFF83E2A5F58D5002718CF /* LocationModel.swift */,
+				04BFF8412A5F58FB002718CF /* LocationModelStore.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +278,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				04BFF8162A5DA0CC002718CF /* ContentView.swift in Sources */,
+				04BFF83F2A5F58D5002718CF /* LocationModel.swift in Sources */,
+				04BFF8422A5F58FB002718CF /* LocationModelStore.swift in Sources */,
+				04BFF8452A5F6C03002718CF /* LocationDetailView.swift in Sources */,
 				04BFF8142A5DA0CC002718CF /* FuzzyWeatherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +289,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04BFF8402A5F58D5002718CF /* LocationModel.swift in Sources */,
 				04BFF8252A5DA0CD002718CF /* FuzzyWeatherTests.swift in Sources */,
+				04BFF8462A5F6C03002718CF /* LocationDetailView.swift in Sources */,
+				04BFF8432A5F58FB002718CF /* LocationModelStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,11 +446,12 @@
 				DEVELOPMENT_TEAM = 447H46P88W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -432,9 +459,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackwherry.FuzzyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -449,11 +479,12 @@
 				DEVELOPMENT_TEAM = 447H46P88W;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -461,9 +492,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackwherry.FuzzyWeather;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

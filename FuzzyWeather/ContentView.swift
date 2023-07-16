@@ -8,19 +8,24 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Binding var store: LocationModelStore
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack{
+            List {
+                ForEach(store.locations.indices, id: \.self) { index in
+                    let location = store.locations[index]
+                    NavigationLink(location.cityName) {
+                        LocationDetailView(location: $store.locations[index])
+                    }
+                }
+            }.navigationTitle("Locations")
         }
-        .padding()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(store: .constant(LocationModelStore()))
     }
 }
