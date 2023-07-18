@@ -11,9 +11,6 @@
 		04BFF8162A5DA0CC002718CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8152A5DA0CC002718CF /* ContentView.swift */; };
 		04BFF8182A5DA0CC002718CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BFF8172A5DA0CC002718CF /* Assets.xcassets */; };
 		04BFF81B2A5DA0CC002718CF /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BFF81A2A5DA0CC002718CF /* Preview Assets.xcassets */; };
-		04BFF8252A5DA0CD002718CF /* FuzzyWeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8242A5DA0CD002718CF /* FuzzyWeatherTests.swift */; };
-		04BFF82F2A5DA0CD002718CF /* FuzzyWeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF82E2A5DA0CD002718CF /* FuzzyWeatherUITests.swift */; };
-		04BFF8312A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */; };
 		04BFF83F2A5F58D5002718CF /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF83E2A5F58D5002718CF /* LocationModel.swift */; };
 		04BFF8402A5F58D5002718CF /* LocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF83E2A5F58D5002718CF /* LocationModel.swift */; };
 		04BFF8422A5F58FB002718CF /* LocationModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8412A5F58FB002718CF /* LocationModelStore.swift */; };
@@ -46,10 +43,7 @@
 		04BFF8172A5DA0CC002718CF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		04BFF81A2A5DA0CC002718CF /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		04BFF8202A5DA0CD002718CF /* FuzzyWeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuzzyWeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		04BFF8242A5DA0CD002718CF /* FuzzyWeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyWeatherTests.swift; sourceTree = "<group>"; };
 		04BFF82A2A5DA0CD002718CF /* FuzzyWeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FuzzyWeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		04BFF82E2A5DA0CD002718CF /* FuzzyWeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyWeatherUITests.swift; sourceTree = "<group>"; };
-		04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FuzzyWeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		04BFF83E2A5F58D5002718CF /* LocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModel.swift; sourceTree = "<group>"; };
 		04BFF8412A5F58FB002718CF /* LocationModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationModelStore.swift; sourceTree = "<group>"; };
 		04BFF8442A5F6C03002718CF /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
@@ -84,8 +78,6 @@
 			isa = PBXGroup;
 			children = (
 				04BFF8122A5DA0CB002718CF /* FuzzyWeather */,
-				04BFF8232A5DA0CD002718CF /* FuzzyWeatherTests */,
-				04BFF82D2A5DA0CD002718CF /* FuzzyWeatherUITests */,
 				04BFF8112A5DA0CB002718CF /* Products */,
 			);
 			sourceTree = "<group>";
@@ -119,23 +111,6 @@
 				04BFF81A2A5DA0CC002718CF /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
-			sourceTree = "<group>";
-		};
-		04BFF8232A5DA0CD002718CF /* FuzzyWeatherTests */ = {
-			isa = PBXGroup;
-			children = (
-				04BFF8242A5DA0CD002718CF /* FuzzyWeatherTests.swift */,
-			);
-			path = FuzzyWeatherTests;
-			sourceTree = "<group>";
-		};
-		04BFF82D2A5DA0CD002718CF /* FuzzyWeatherUITests */ = {
-			isa = PBXGroup;
-			children = (
-				04BFF82E2A5DA0CD002718CF /* FuzzyWeatherUITests.swift */,
-				04BFF8302A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift */,
-			);
-			path = FuzzyWeatherUITests;
 			sourceTree = "<group>";
 		};
 		04BFF83D2A5F5877002718CF /* Model */ = {
@@ -290,7 +265,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				04BFF8402A5F58D5002718CF /* LocationModel.swift in Sources */,
-				04BFF8252A5DA0CD002718CF /* FuzzyWeatherTests.swift in Sources */,
 				04BFF8462A5F6C03002718CF /* LocationDetailView.swift in Sources */,
 				04BFF8432A5F58FB002718CF /* LocationModelStore.swift in Sources */,
 			);
@@ -300,8 +274,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04BFF8312A5DA0CD002718CF /* FuzzyWeatherUITestsLaunchTests.swift in Sources */,
-				04BFF82F2A5DA0CD002718CF /* FuzzyWeatherUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -186,6 +186,6 @@ private func getFormattedDateTime(offsetSeconds: Int) -> String {
 
 private func getFormattedDateTimeLastUpdated(date: Date) -> String {
     let formatter = DateFormatter()
-    formatter.dateFormat = "h:mm a" // just the hour and am/pm, like "7:01 PM"
+    formatter.dateFormat = "h:mm a" // hour, minutes, and am/pm, like "7:01 PM"
     return formatter.string(from: date)
 }
