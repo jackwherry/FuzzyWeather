@@ -30,4 +30,8 @@ struct LocationModelStore {
     mutating func delete(atOffsets: IndexSet) {
         locations.remove(atOffsets: atOffsets)
     }
+    
+    mutating func move(fromOffsets: IndexSet, toOffset: Int) {
+        locations.move(fromOffsets: fromOffsets, toOffset: toOffset)
+    }
 }
