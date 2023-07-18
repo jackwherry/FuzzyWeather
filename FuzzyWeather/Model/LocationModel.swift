@@ -229,9 +229,6 @@ struct LocationModel: Equatable, Identifiable {
         /// Hour of day (represented by a Date for the start time of this hour)
         var hour: Date
         
-        /// Hour's location in [0,1] range (position within 24 hour forecast period)
-        var timelineLocation: Double
-        
         /// String of emojis used in animation
         var emojis: String
         
@@ -251,7 +248,7 @@ struct LocationModel: Equatable, Identifiable {
     
     subscript(hourID hourID: HourForecast.ID) -> HourForecast {
         get { hourForecasts.first(where: { $0.id == hourID }) ?? HourForecast(
-            hour: Date(), timelineLocation: 0, emojis: "❌", color: Color(white: 0), id: 0
+            hour: Date(), emojis: "❌", color: Color(white: 0), id: 0
         ) }
         set {
             if let index = hourForecasts.firstIndex(where: { $0.id == hourID }) {
@@ -266,7 +263,7 @@ struct LocationModel: Equatable, Identifiable {
         for hour in hourForecasts {
             id = max(id, hour.id)
         }
-        let hour = HourForecast(hour: hour, timelineLocation: timelineLocation, emojis: "❌", color: Color(white: 0), id: id + 1)
+        let hour = HourForecast(hour: hour, emojis: "❌", color: Color(white: 0), id: id + 1)
         hourForecasts.append(hour)
         return hour
     }
@@ -294,7 +291,7 @@ extension LocationModel {
             dates.append(startingDate.advanced(by: TimeInterval(3600)))
         }
         for (index, date) in dates.enumerated() {
-            hourForecasts.append(HourForecast(hour: date, timelineLocation: Double(index)/Double(hourForecasts.count-1), emojis: "❌", color: Color(white: 0), id: index))
+            hourForecasts.append(HourForecast(hour: date, emojis: "❌", color: Color(white: 0), id: index))
         }
     }
 }

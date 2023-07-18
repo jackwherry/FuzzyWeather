@@ -26,4 +26,8 @@ struct LocationModelStore {
         locations.append(location)
         return location
     }
+    
+    mutating func delete(atOffsets: IndexSet) {
+        locations.remove(atOffsets: atOffsets)
+    }
 }
