@@ -238,6 +238,9 @@ struct LocationModel: Equatable, Identifiable, Codable {
     /// GPS coordinates representing the location
     var latitude, longitude: Double
     
+    /// Last update of data
+    var lastUpdated: Date
+    
     // TODO: also represent using NWS gridpoints so we don't need to look them up on each API call?
     
     /// The city name closest to this location
@@ -278,6 +281,8 @@ extension LocationModel {
         self.longitude = longitude
         self.cityName = cityName
         self.id = id
+        
+        self.lastUpdated = Date.distantPast // we haven't actually gotten data yet
         
         hourForecasts = []
         var dates: [Date] = []

@@ -10,49 +10,96 @@ import SwiftUI
 struct LocationDetailView: View {
     @Binding var location: LocationModel
     
+    @State private var doneInitialRender = false
+    
     @State private var selectedTimeOfDay = 0.0
     @State private var isEditing = false
+    @State private var isLoadingNewData = false
     
-    @State private var emojiState = EmojiState(count: 13, emojis: "😤🤔😬")
+    @State private var emojiState = EmojiState(count: 13, emojis: "❓")
 
     var body: some View {
-        GeometryReader { proxy in
-            VStack {
-                Slider(
-                    value: $selectedTimeOfDay,
-                    in: 0...24,
-                    step: 1,
-                    onEditingChanged: { editing in
-                        emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
-                        isEditing = editing
-                        if !isEditing {
-                            withAnimation(.easeInOut(duration: 2)) {
-                                emojiState.reposition()
+        NavigationStack {
+            GeometryReader { proxy in
+                VStack {
+                    Slider(
+                        value: $selectedTimeOfDay,
+                        in: 0...23,
+                        step: 1,
+                        onEditingChanged: { editing in
+                            emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
+                            isEditing = editing
+                            if !isEditing {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    emojiState.reposition()
+                                }
                             }
                         }
-                    }
-                ).padding()
-                Text(getScrollText(selectedTimeOfDay: selectedTimeOfDay)) //.foregroundColor(isEditing ? .red : .blue)
-                    .font(.title2)
-                Text(getFormattedDateTime(offsetSeconds: 3600 * Int(selectedTimeOfDay)))
-                ZStack {
-                    ForEach(emojiState.entries.indices, id: \.self) { index in
-                        let entry = emojiState.entries[index]
-                        entry.emoji
-                            .scaleEffect(2)
-                            .position(
-                                x: proxy.size.width * entry.x,
-                                y: proxy.size.height * entry.y)
+                    ).padding()
+                    Text(getScrollText(selectedTimeOfDay: selectedTimeOfDay)) //.foregroundColor(isEditing ? .red : .blue)
+                        .font(.title2)
+                    Text(getFormattedDateTime(offsetSeconds: 3600 * Int(selectedTimeOfDay)))
+                    ZStack {
+                        ForEach(emojiState.entries.indices, id: \.self) { index in
+                            let entry = emojiState.entries[index]
+                            entry.emoji
+                                .scaleEffect(2)
+                                .position(
+                                    x: proxy.size.width * entry.x,
+                                    y: proxy.size.height * entry.y)
+                        }
                     }
                 }
+                // .font(.system(size: 24))
+                .contentShape(Rectangle())
+                .navigationTitle(location.cityName)
+                .accessibilityAction(named: "Reposition") {
+                    emojiState.reposition()
+                }.toolbar {
+                    ToolbarItem(placement: .bottomBar) {
+                        HStack {
+                            Button() {
+                                isLoadingNewData = true
+                                
+                                Task {
+                                    // TODO: network code here
+                                }
+                                
+                                emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    emojiState.reposition()
+                                }
+                                location.lastUpdated = Date()
+                            } label: { Image(systemName: "arrow.clockwise") }
+                            if isLoadingNewData {
+                                ProgressView()
+                            }
+                            Spacer()
+                            if location.lastUpdated == Date.distantPast {
+                                Text("No data loaded yet").font(.footnote)
+                            } else {
+                                Text("Updated at \(getFormattedDateTimeLastUpdated(date: location.lastUpdated))").font(.footnote)
+                            }
+                            Spacer()
+                            Button() {
+                                // TODO: display some info (debug screen with coordinates, NWS 2.5km^2 zones, etc.)
+                            } label: { Image(systemName: "info.circle") }
+                            
+                        }
+                    }
+                }
+                //.drawingGroup()
             }
-            // .font(.system(size: 24))
-            .contentShape(Rectangle())
-            .navigationTitle(location.cityName)
-            .accessibilityAction(named: "Reposition") {
-                emojiState.reposition()
+        }.onAppear {
+            // hacky hack to force a re-render immediately after first load, since we can't
+            //  call the EmojiState initializer with anything that isn't known at compile time
+            if !doneInitialRender {
+                emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
+                withAnimation(.easeInOut(duration: 0.5)) {
+                    emojiState.reposition()
+                }
+                doneInitialRender.toggle()
             }
-            //.drawingGroup()
         }
     }
 }
@@ -133,8 +180,12 @@ private func getScrollText(selectedTimeOfDay: Double) -> String {
 
 private func getFormattedDateTime(offsetSeconds: Int) -> String {
     let formatter = DateFormatter()
-    
     formatter.dateFormat = "h a" // just the hour and am/pm, like "7 PM"
-    
     return formatter.string(from: Date().advanced(by: TimeInterval(offsetSeconds)))
+}
+
+private func getFormattedDateTimeLastUpdated(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "h:mm a" // just the hour and am/pm, like "7:01 PM"
+    return formatter.string(from: date)
 }
