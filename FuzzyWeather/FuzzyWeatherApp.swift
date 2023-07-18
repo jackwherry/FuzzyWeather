@@ -9,11 +9,26 @@ import SwiftUI
 
 @main
 struct FuzzyWeatherApp: App {
-    @State private var store = LocationModelStore.defaultStore
+    @StateObject private var store = LocationModelStoreStore()
     
     var body: some Scene {
         WindowGroup {
-            ContentView(store: $store)
+            ContentView(store: $store.locationModelStore) {
+                Task {
+                    do {
+                        try await store.save(locations: store.locationModelStore)
+                    } catch {
+                        fatalError(error.localizedDescription)
+                    }
+                }
+            }
+                .task {
+                    do {
+                        try await store.load()
+                    } catch {
+                        fatalError(error.localizedDescription)
+                    }
+                }
         }
     }
 }

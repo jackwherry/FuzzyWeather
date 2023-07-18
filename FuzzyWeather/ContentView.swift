@@ -10,10 +10,13 @@ import CoreLocation
 
 struct ContentView: View {
     @Binding var store: LocationModelStore
+    @Environment(\.scenePhase) private var scenePhase
     @State private var showingAddSheet = false
     
+    let saveAction: ()->Void
+    
     var body: some View {
-        NavigationStack{
+        NavigationStack {
             List {
                 ForEach(store.locations.indices, id: \.self) { index in
                     let location = store.locations[index]
@@ -43,6 +46,9 @@ struct ContentView: View {
                         }
                 }
             }
+        }
+        .onChange(of: scenePhase) { phase in
+            if phase == .inactive { saveAction() }
         }
     }
 }
@@ -132,8 +138,8 @@ func getCoordinate( addressString : String,
 }
 
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView(store: .constant(LocationModelStore()))
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentView(store: .constant(LocationModelStore()))
+//    }
+//}

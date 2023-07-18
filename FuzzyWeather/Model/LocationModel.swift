@@ -222,18 +222,15 @@ func getTemperatureComfortLevel(temperature: Measurement<UnitTemperature>, windC
     return .temperatureOutsideReasonableBounds
 }
 
-struct LocationModel: Equatable, Identifiable {
+struct LocationModel: Equatable, Identifiable, Codable {
     /// Represents the forecasted weather conditions for a given hour
     /// (conceptually equivalent to WeatherKit's HourWeather structure: https://developer.apple.com/documentation/weatherkit/hourweather)
-    struct HourForecast: Equatable, Identifiable {
+    struct HourForecast: Equatable, Identifiable, Codable {
         /// Hour of day (represented by a Date for the start time of this hour)
         var hour: Date
         
         /// String of emojis used in animation
         var emojis: String
-        
-        /// Background color (used to generate a moving gradient)
-        var color: Color
         
         var id: Int
     }
@@ -248,7 +245,7 @@ struct LocationModel: Equatable, Identifiable {
     
     subscript(hourID hourID: HourForecast.ID) -> HourForecast {
         get { hourForecasts.first(where: { $0.id == hourID }) ?? HourForecast(
-            hour: Date(), emojis: "❌", color: Color(white: 0), id: 0
+            hour: Date(), emojis: "🚫", id: 0
         ) }
         set {
             if let index = hourForecasts.firstIndex(where: { $0.id == hourID }) {
@@ -263,7 +260,7 @@ struct LocationModel: Equatable, Identifiable {
         for hour in hourForecasts {
             id = max(id, hour.id)
         }
-        let hour = HourForecast(hour: hour, emojis: "❌", color: Color(white: 0), id: id + 1)
+        let hour = HourForecast(hour: hour, emojis: "⛔️", id: id + 1)
         hourForecasts.append(hour)
         return hour
     }
@@ -271,15 +268,12 @@ struct LocationModel: Equatable, Identifiable {
     /// Array of (possibly unsorted) hourly forecasts
     var hourForecasts: [HourForecast]
     
-    // TODO: add a place name closest to this location?
-    //  (like the "weather for ..." at the bottom of the Apple Weather app)
-    
     /// Unique identifier
-    var id: Int
+    var id: UUID
 }
 
 extension LocationModel {
-    init(latitude: Double, longitude: Double, cityName: String = "", id: Int = 0, startingDate: Date) {
+    init(latitude: Double, longitude: Double, cityName: String = "", id: UUID = UUID(), startingDate: Date) {
         self.latitude = latitude
         self.longitude = longitude
         self.cityName = cityName
@@ -291,7 +285,7 @@ extension LocationModel {
             dates.append(startingDate.advanced(by: TimeInterval(3600)))
         }
         for (index, date) in dates.enumerated() {
-            hourForecasts.append(HourForecast(hour: date, emojis: "❌", color: Color(white: 0), id: index))
+            hourForecasts.append(HourForecast(hour: date, emojis: "❌", id: index))
         }
     }
 }
