@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		049962892A6CA53000A66F75 /* NationalWeatherService in Frameworks */ = {isa = PBXBuildFile; productRef = 049962882A6CA53000A66F75 /* NationalWeatherService */; };
 		04BFF8142A5DA0CC002718CF /* FuzzyWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8132A5DA0CC002718CF /* FuzzyWeatherApp.swift */; };
 		04BFF8162A5DA0CC002718CF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BFF8152A5DA0CC002718CF /* ContentView.swift */; };
 		04BFF8182A5DA0CC002718CF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04BFF8172A5DA0CC002718CF /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049962892A6CA53000A66F75 /* NationalWeatherService in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,9 @@
 			dependencies = (
 			);
 			name = FuzzyWeather;
+			packageProductDependencies = (
+				049962882A6CA53000A66F75 /* NationalWeatherService */,
+			);
 			productName = FuzzyWeather;
 			productReference = 04BFF8102A5DA0CB002718CF /* FuzzyWeather.app */;
 			productType = "com.apple.product-type.application";
@@ -210,6 +215,9 @@
 				Base,
 			);
 			mainGroup = 04BFF8072A5DA0CB002718CF;
+			packageReferences = (
+				049962872A6CA53000A66F75 /* XCRemoteSwiftPackageReference "NationalWeatherService-Swift" */,
+			);
 			productRefGroup = 04BFF8112A5DA0CB002718CF /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -589,6 +597,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		049962872A6CA53000A66F75 /* XCRemoteSwiftPackageReference "NationalWeatherService-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WeatherProvider/NationalWeatherService-Swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.4.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		049962882A6CA53000A66F75 /* NationalWeatherService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 049962872A6CA53000A66F75 /* XCRemoteSwiftPackageReference "NationalWeatherService-Swift" */;
+			productName = NationalWeatherService;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 04BFF8082A5DA0CB002718CF /* Project object */;
 }

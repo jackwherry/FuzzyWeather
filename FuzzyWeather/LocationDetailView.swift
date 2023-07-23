@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+import CoreLocation
+
+import NationalWeatherService
+
+let nws = NationalWeatherService(userAgent: "(FuzzyWeather, weatherapp@jackwherry.com)")
 
 struct LocationDetailView: View {
     @Binding var location: LocationModel
@@ -38,7 +43,7 @@ struct LocationDetailView: View {
                     ).padding()
                     Text(getScrollText(selectedTimeOfDay: selectedTimeOfDay)) //.foregroundColor(isEditing ? .red : .blue)
                         .font(.title2)
-                    Text(getFormattedDateTime(offsetSeconds: 3600 * Int(selectedTimeOfDay)))
+                    // Text(getFormattedDateTime(offsetSeconds: 3600 * Int(selectedTimeOfDay)))
                     ZStack {
                         ForEach(emojiState.entries.indices, id: \.self) { index in
                             let entry = emojiState.entries[index]
@@ -61,15 +66,33 @@ struct LocationDetailView: View {
                             Button() {
                                 isLoadingNewData = true
                                 
-                                Task {
-                                    // TODO: network code here
-                                }
                                 
-                                emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    emojiState.reposition()
+                                let latlong = CLLocation(latitude: location.latitude, longitude: location.longitude)
+                                nws.hourlyForecast(for: latlong) { result in
+                                    DispatchQueue.main.async { // we can only update UI state from the main thread
+                                        switch result {
+                                        case .success(let forecast):
+                                            location.lastUpdated = Date()
+                                            
+                                            for (index, period) in forecast.periods.enumerated() {
+                                                if index > 23 {
+                                                    break
+                                                }
+                                                location.hourForecasts[index].hour = period.date.start
+                                                location.hourForecasts[index].emojis = getEmojisFromNWSIcon(icon: period.conditions[0])
+                                                
+                                                emojiState.updateEmojis(emojis: location[hourID: Int(selectedTimeOfDay)].emojis)
+                                                withAnimation(.easeInOut(duration: 0.5)) {
+                                                    emojiState.reposition()
+                                                }
+                                                
+                                                isLoadingNewData = false
+                                            }
+                                        case .failure(let error):
+                                            print(error)
+                                        }
+                                    }
                                 }
-                                location.lastUpdated = Date()
                             } label: { Image(systemName: "arrow.clockwise") }
                             if isLoadingNewData {
                                 ProgressView()
@@ -188,4 +211,39 @@ private func getFormattedDateTimeLastUpdated(date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "h:mm a" // hour, minutes, and am/pm, like "7:01 PM"
     return formatter.string(from: date)
+}
+                                                            
+public func getEmojisFromNWSIcon(icon: Icon) -> String {
+    switch icon {
+    case .skc: return "☀️"
+    case .few: return "🌤️"
+    case .sct: return "⛅️"
+    case .bkn: return "🌥️"
+    case .ovc: return "☁️"
+    case .wind_skc: return "☀️💨"
+    case .wind_few: return "🌤️💨"
+    case .wind_sct: return "⛅️💨"
+    case .wind_bkn: return "🌥️💨"
+    case .wind_ovc: return "☁️💨"
+    case .snow: return "🌨️❄️"
+    case .rain_snow, .rain_sleet: return "🌧️🌨️"
+    case .snow_sleet: return "🌧️❄️🌨️"
+    case .fzra, .rain_fzra, .snow_fzra, .sleet: return "❄️🌧️"
+    case .rain: return "☔️🌧️"
+    case .rain_showers: return "☁️🌧️"
+    case .rain_showers_hi: return "🌦️🌧️"
+    case .tsra: return "☁️🌩️⛈️"
+    case .tsra_sct, .tsra_hi: return "🌩️⛈️🌦️"
+    case .tornado: return "🌪️⛈️"
+    case .hurricane: return "🌀💧"
+    case .tropical_storm: return "🏝️⛈️🌀"
+    case .dust: return "🌫️🌆"
+    case .smoke: return "🚬🌫️🌆"
+    case .haze: return "🌫️🌆" // should this be different from dust?
+    case .hot: return "🔥☀️🥵"
+    case .cold: return "🥶❄️☃️"
+    case .blizzard: return "🌨️❄️☃️"
+    case .fog: return "🌫️🌁😶‍🌫️"
+    case .other: return "🤔🫤"
+    }
 }

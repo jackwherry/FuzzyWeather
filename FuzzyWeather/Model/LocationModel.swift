@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
+import NationalWeatherService
 
 /// Represents the comfort level associated with the current dewpoint
-// TODO: check access control (is public the right level?)
 public enum dewpointComfortLevel {
     case tooDry // < 32 deg F
     case comfortableDry // 32-49 deg F
@@ -220,6 +220,76 @@ func getTemperatureComfortLevel(temperature: Measurement<UnitTemperature>, windC
     
     // Error case
     return .temperatureOutsideReasonableBounds
+}
+
+public func getEmojis(
+    dewpoint: Measurement<UnitTemperature>,
+    relativeHumidity: Double,
+    temperature: Measurement<UnitTemperature>,
+    windSpeed: Measurement<UnitSpeed>,
+    probabilityOfPrecipitation: Double
+) -> String {
+    var emojis = ""
+    
+    switch getdewpointComfortLevel(dewpoint: dewpoint) {
+    case .slightlyHumid:
+        emojis.append("💦")
+    case .moderatelyHumid:
+        emojis.append("💦💦")
+    case .veryHumid:
+        emojis.append("💦💦💦")
+    case .extremelyHumid:
+        emojis.append("💦💦💦💦")
+    default: ()
+    }
+    
+    switch getWindComfortLevel(wind: windSpeed) {
+    case .calm, .windOutsideReasonableBounds: ()
+    case .lightAir, .lightBreeze:
+        emojis.append("🍃")
+    case .gentleBreeze, .moderateBreeze:
+        emojis.append("💨🌬️")
+    case .freshBreeze, .strongBreeze:
+        emojis.append("💨💨🌬️")
+    case .nearGale, .gale, .strongGale:
+        emojis.append("💨💨🌬️💨💨🌬️")
+    default:
+        emojis.append("💨💨🌬️💨💨🌬️🌬️🌬️")
+    }
+    
+    var windChill: Int? = nil
+    var heatIndex: Int? = nil
+    
+    if (temperature.converted(to: .fahrenheit).value < 45) {
+        windChill = getWindChill(wind: windSpeed, temperature: temperature)
+    } else {
+        heatIndex = getHeatIndex(relativeHumidity: relativeHumidity, temperature: temperature)
+    }
+    
+    switch getTemperatureComfortLevel(temperature: temperature, windChill: windChill, heatIndex: heatIndex) {
+    case .extremeDangerousCold, .veryDangerousCold, .moderatelyDangerousCold:
+        emojis.append("🥶❄️☃️")
+    case .slightlyDangerousCold, .safeUnderFreezing:
+        emojis.append("❄️⛄️")
+    case .snowMelting:
+        emojis.append("❄️💧")
+    case .safeWarm:
+        emojis.append("🥰")
+    case .cautionHot, .extremeCautionHot:
+        emojis.append("🔥🥵")
+    case .dangerHot, .extremeDangerHot:
+        emojis.append("🔥🥵🔥🥵🌶️")
+    default: ()
+    }
+    
+    // maybe use an enum here like the other things? for now it's simple enough to use the ifs
+    if probabilityOfPrecipitation > 75 {
+        emojis.append("🌧️💧")
+    } else if probabilityOfPrecipitation > 50 {
+        emojis.append("💧")
+    }
+    
+    return emojis
 }
 
 struct LocationModel: Equatable, Identifiable, Codable {
